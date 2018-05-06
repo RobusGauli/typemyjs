@@ -10,25 +10,22 @@
     // Recommended built-in rules
     "no-var-keyword": true,
     "no-parameter-reassignment": true,
-    "typedef": [true, "call-signature"],
+    "only-arrow-functions": false,
+    "object-literal-sort-keys": false,
 
     // Immutability rules
-    "readonly-keyword": true,
     "readonly-array": true,
-    "no-let": true,
-    "no-object-mutation": true,
+    "no-object-mutation": false,
     "no-delete": true,
     "no-method-signature": true,
+    "no-expression-statement": false,
+    "no-this-assignment": false,
+    "prefer-conditional-expression": false,
 
     // Functional style rules
-    "no-this": true,
-    "no-class": true,
+    "no-if-statement": false,
     "no-mixed-interface": true,
-    "no-expression-statement": [
-      true,
-      { "ignore-prefix": ["console.", "process.exit"] }
-    ],
-    "no-if-statement": true
+    "max-classes-per-file": false
     /* end tslint-immutable rules */
   }
 }
