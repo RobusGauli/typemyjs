@@ -4,22 +4,15 @@ const OUT_OF_RANGE = 300;
 const MISMATCH_PARAMETERS = 400;
 const UNDEFINED_OR_NULL_ATTRIBUTES = 500;
 
-interface FunctionValidationInterface {
-  readonly requiredParams: any,
-  readonly requiredAttributes: any
-}
-
 /**
  * Signature function that simply returns. Just for api consistency.
  * @param {object} validationObject
- * 
- * @returns {object}  
+ *
+ * @returns {object}
  */
-function FunctionType(validationObject: FunctionValidationInterface) {
-  return {
-    requiredParams: validationObject.requiredParams,
-    requiredAttributes: validationObject.requiredAttributes
-  };
+// tslint:disable-next-line:typedef
+function FunctionType(validationObject: { readonly [key: string]: any }) {
+  return validationObject;
 }
 
 function NumberType(validationObject: any) {
@@ -53,10 +46,9 @@ function NumberType(validationObject: any) {
         if (generatedErrors.length) {
           // there is a error
           const payload = generatedErrors.reduce((acc: any, key: any) => {
-            const value = errorPayload[key];
-            return value[1] === OUT_OF_RANGE
+            return errorPayload[key][1] === OUT_OF_RANGE
               ? { ...acc, [OUT_OF_RANGE]: validationObject.range }
-              : { ...acc, [value[1]]: null };
+              : { ...acc, [errorPayload[key][1]]: null };
           }, {});
           return {
             error: true,
@@ -145,7 +137,7 @@ function validateObjectConstruction(
     }
   }
   const args = Object.keys(constructorArgument);
-  let errorPayload: { [key: string]: {} } = {};
+  const errorPayload: { [key: string]: {} } = {};
   let error: boolean = false;
   args.forEach(arg => {
     if (validationObject[arg]) {
@@ -167,7 +159,7 @@ function requiredFunctionParameters(
   requiredArgumentList: ReadonlyArray<any>,
   requiredAttributes: ReadonlyArray<any>
 ) {
-  return function(func: Function) {
+  return function(func: any) {
     return function(argumentObject: any) {
       const target = this;
       if (
@@ -192,7 +184,7 @@ function requiredFunctionParameters(
         };
       }
 
-      let payload: { [key: string]: any } = {
+      const payload: { [key: string]: any } = {
         error: false,
         code: UNDEFINED_OR_NULL_ATTRIBUTES,
         errorPayload: {}
@@ -261,4 +253,4 @@ export default {
   FunctionType,
   StringType,
   NumberType
-}
+};
