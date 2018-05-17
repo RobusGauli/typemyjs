@@ -1,4 +1,4 @@
-# typemyjs
+# TYPE MY JS
 
 A type enforcer for javascript.
 
