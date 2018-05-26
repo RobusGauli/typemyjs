@@ -1,6 +1,6 @@
 # TYPE MY JS
 
-A type enforcer for javascript.
+A type enforcer for javascript. It can be used to provide a runtime type checking of the attributes and function parameters.
 
 ```javascript
 import Types, { wrapWithType } from 'typemyjs'
